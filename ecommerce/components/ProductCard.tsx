@@ -66,7 +66,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               onMouseOut={handleMouseOut}
             >
               <span className="absolute inset-0 bg-gray-400/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
-              <button className="relative z-10 px-3 py-1 flex items-center cursor-pointer">
+              <span className="relative z-10 px-3 py-1 flex items-center cursor-pointer">
                 {addToCart ? (
                   <span className="relative px-25 text-black flex items-center">
                     Add to cart
@@ -74,7 +74,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 ) : (
                   <BiCart className="text-2xl text-gray-800 duration-1000" />
                 )}
-              </button>
+              </span>
             </button>
           </div>
         </div>
