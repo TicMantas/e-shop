@@ -1,3 +1,4 @@
+import { queryOptions, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export const GetAllProducts = async () => {
@@ -25,4 +26,12 @@ export const GetAllCategories = async () => {
   axios.defaults.baseURL = base;
   const response = await axios.get("/products/categories");
   return response.data;
+};
+
+export const productQueries = {
+  useProductById: (id: number) =>
+    queryOptions({
+      queryKey: ["productId", id],
+      queryFn: () => GetProductById(id),
+    }),
 };

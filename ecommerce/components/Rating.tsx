@@ -12,7 +12,7 @@ export default function Rating({ rating, size = 20 }: RatingProps) {
 
   return (
     <div className="flex gap-2 items-center">
-      <div className={`relative w-[${size}] h-[${size}] inline-block`}>
+      <div className={`relative inline-block`}>
         <FaStar color={empty} size={size} />
         <div
           className="absolute top-0 left-0 overflow-hidden pointer-events-none"
@@ -21,7 +21,7 @@ export default function Rating({ rating, size = 20 }: RatingProps) {
           <FaStar color={filled} size={size} />
         </div>
       </div>
-      <span className="font-semibold text-sm">{rating}</span>
+      <p className={`font-semibold md:text-xl text-lg`}>{rating}</p>
     </div>
   );
 }

@@ -4,12 +4,14 @@ import Image from "next/image";
 import Rating from "./Rating";
 import { BiCart } from "react-icons/bi";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 type ProductCardProps = {
   product: Product;
+  onClick?: () => void;
 };
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, onClick }: ProductCardProps) {
   const [addToCart, setAddToCart] = useState(false);
   const hideTimer = useRef<number | null>(null);
 
@@ -37,10 +39,14 @@ export default function ProductCard({ product }: ProductCardProps) {
     }, 300);
   };
   return (
-    <div className="relative flex flex-col rounded-lg items-center hover:scale-105 duration-700">
+    <Link
+      href={`/products/${product.id}`}
+      className="relative flex flex-col rounded-lg items-center hover:scale-105 duration-700"
+    >
       <div
         key={product.id}
         className="flex flex-2 w-full bg-gray-400/40 justify-center items-center border-gray-400/30 border-t border-l border-r rounded-t-lg"
+        onClick={onClick}
       >
         <div className="absolute top-2 right-2">
           <Rating rating={product.rating.rate} />
@@ -79,6 +85,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
