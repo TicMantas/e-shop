@@ -11,6 +11,7 @@ type ProductCardProps = {
   onClick?: () => void;
 };
 
+// ...existing code...
 export default function ProductCard({ product, onClick }: ProductCardProps) {
   const [addToCart, setAddToCart] = useState(false);
   const hideTimer = useRef<number | null>(null);
@@ -41,11 +42,11 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
   return (
     <Link
       href={`/products/${product.id}`}
-      className="relative flex flex-col rounded-lg items-center hover:scale-105 duration-700"
+      className="relative flex flex-col rounded-lg items-center md:hover:scale-105 md:duration-700 md:w-full"
     >
       <div
         key={product.id}
-        className="flex flex-2 w-full bg-gray-400/40 justify-center items-center border-gray-400/30 border-t border-l border-r rounded-t-lg"
+        className="flex w-full bg-gray-400/40 justify-center items-center border-gray-400/30 border-t border-l border-r rounded-t-lg"
         onClick={onClick}
       >
         <div className="absolute top-2 right-2">
@@ -56,29 +57,29 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
           alt={product.title}
           width={200}
           height={0}
-          className="object-contain hover:scale-120 duration-900 h-40 p-3"
+          className="object-contain transform transition-transform duration-300 sm:h-40 p-3"
         />
       </div>
-      <div className="flex flex-1 w-full border-gray-400/30 p-4 border-b border-l border-r rounded-b-lg">
-        <div className="flex gap-4 flex-col items-center w-full">
-          <div className="flex justify-between gap-5 w-full">
-            <p className="truncate font-semibold">{product.title}</p>
-            <p className="font-bold ">${product.price}</p>
+      <div className="flex w-full border-gray-400/30 p-3 sm:p-4 border-b border-l border-r rounded-b-lg">
+        <div className="flex gap-3 flex-col w-full">
+          <div className="flex md:items-center md:flex md:justify-between gap-3 w-full">
+            <p className="truncate font-semibold flex-1 min-w-0 text-sm sm:text-base">
+              {product.title}
+            </p>
+            <p className="font-bold text-sm">${product.price}</p>
           </div>
-          <div>
+          <div className="w-full">
             <button
-              className="relative overflow-hidden group rounded-md"
+              className="relative overflow-hidden group rounded-md w-full sm:w-auto"
               onMouseOver={handleMouseOver}
               onMouseOut={handleMouseOut}
             >
-              <span className="absolute inset-0 bg-gray-400/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
-              <span className="relative z-10 px-3 py-1 flex items-center cursor-pointer">
+              <span className="absolute inset-0 bg-gray-400/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+              <span className="relative z-10 md:px-3 py-2 flex items-center justify-center w-full sm:w-auto">
                 {addToCart ? (
-                  <span className="relative px-25 text-black flex items-center">
-                    Add to cart
-                  </span>
+                  <span className="text-black font-medium">Add to cart</span>
                 ) : (
-                  <BiCart className="text-2xl text-gray-800 duration-1000" />
+                  <BiCart className="text-2xl text-gray-800 transition-colors duration-200" />
                 )}
               </span>
             </button>
@@ -88,3 +89,4 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
     </Link>
   );
 }
+// ...existing code...
