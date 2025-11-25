@@ -3,8 +3,11 @@ import { GetAllProducts } from "@/api/Products";
 import { useQuery } from "@tanstack/react-query";
 import { Product } from "../products";
 import ProductCard from "@/components/ProductCard";
+import { useRouter } from "next/navigation";
 
 export default function Products() {
+  const router = useRouter();
+
   const { data, isLoading, error } = useQuery<Product[] | null>({
     queryKey: ["products"],
     queryFn: () => GetAllProducts(),
@@ -22,7 +25,11 @@ export default function Products() {
       <p className="text-4xl font-semibold mb-6 text-center">Products Page</p>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {data?.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard
+            key={product.id}
+            product={product}
+            onClick={() => router.push(`/products/${product.id}`)}
+          />
         ))}
       </div>
     </div>
