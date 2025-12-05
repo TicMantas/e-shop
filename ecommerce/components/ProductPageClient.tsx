@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Rating from "@/components/Rating";
 import { BiArrowBack } from "react-icons/bi";
-import { productQueries } from "@/hooks/Products";
+import { productQueries } from "@/api/Products";
 import { useState } from "react";
 
 export default function ProductPageClient({ id: propId }: { id?: number }) {
