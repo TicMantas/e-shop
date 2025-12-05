@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 export default function Products() {
   const router = useRouter();
+
   const { data, isLoading, error } = useQuery(productQueries.useProducts());
 
   if (isLoading) {

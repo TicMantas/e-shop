@@ -22,15 +22,15 @@ export const GetAllCategories = async () => {
 };
 
 export const productQueries = {
-  useProducts: () =>
-    queryOptions({
-      queryKey: ["products"],
-      queryFn: () => GetAllProducts(),
-    }),
   useProductById: (id: number) =>
     queryOptions({
       queryKey: ["productId", id],
       queryFn: () => GetProductById(id),
+    }),
+  useProducts: () =>
+    queryOptions({
+      queryKey: ["products"],
+      queryFn: () => GetAllProducts(),
     }),
   useCategories: () =>
     queryOptions({
