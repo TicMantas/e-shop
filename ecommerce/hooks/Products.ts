@@ -14,13 +14,6 @@ export const GetProductById = async (id: number) => {
   return response.data;
 };
 
-export const GetProductsByCategory = async (category: string) => {
-  const base = "https://fakestoreapi.com";
-  axios.defaults.baseURL = base;
-  const response = await axios.get(`/products/category/${category}`);
-  return response.data;
-};
-
 export const GetAllCategories = async () => {
   const base = "https://fakestoreapi.com";
   axios.defaults.baseURL = base;
@@ -29,9 +22,19 @@ export const GetAllCategories = async () => {
 };
 
 export const productQueries = {
+  useProducts: () =>
+    queryOptions({
+      queryKey: ["products"],
+      queryFn: () => GetAllProducts(),
+    }),
   useProductById: (id: number) =>
     queryOptions({
       queryKey: ["productId", id],
       queryFn: () => GetProductById(id),
+    }),
+  useCategories: () =>
+    queryOptions({
+      queryKey: ["categories"],
+      queryFn: () => GetAllCategories(),
     }),
 };
