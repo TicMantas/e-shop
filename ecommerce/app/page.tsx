@@ -1,3 +1,5 @@
+import MainPageClient from "./containers/MainPage/MainPageClient";
+
 export default function Home() {
-  return <div></div>;
+  return <MainPageClient />;
 }
