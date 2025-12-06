@@ -11,7 +11,6 @@ type ProductCardProps = {
   onClick?: () => void;
 };
 
-// ...existing code...
 export default function ProductCard({ product, onClick }: ProductCardProps) {
   const [addToCart, setAddToCart] = useState(false);
   const hideTimer = useRef<number | null>(null);
@@ -89,4 +88,3 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
     </Link>
   );
 }
-// ...existing code...
