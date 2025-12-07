@@ -1,4 +1,4 @@
-import ProductPageClient from "@/components/ProductPageClient";
+import ProductPageClient from "@/app/containers/ProductPage/ProductPageClient";
 import { notFound } from "next/navigation";
 
 export default async function Product({

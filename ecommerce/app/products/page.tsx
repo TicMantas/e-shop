@@ -1,18 +1,18 @@
 "use client";
 import { productQueries } from "@/api/Products";
 import { useQuery } from "@tanstack/react-query";
-import { Product } from "../products";
 import ProductCard from "@/components/ProductCard";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Categorize } from "@/utils/Categorize";
 
 export default function Products() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const categoryUrl = searchParams?.get("category") ?? "";
+
   const { data: categories } = useQuery(productQueries.useCategories());
   const { data, isLoading, error } = useQuery(productQueries.useProducts());
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const filtered = Categorize(selectedCategory, data);
+  const filtered = Categorize(categoryUrl, data);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading products</div>;
@@ -21,8 +21,14 @@ export default function Products() {
       <p className="text-4xl font-semibold mb-6 text-center">Products Page</p>
       <div className="flex justify-end mb-4">
         <select
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
+          value={categoryUrl}
+          onChange={(e) => {
+            const value = e.target.value;
+            const url = value
+              ? `/products?category=${encodeURIComponent(value)}`
+              : "/products";
+            router.push(url);
+          }}
           className="text-center border p-1 rounded-2xl border-gray-300"
         >
           <option value="">All categories</option>

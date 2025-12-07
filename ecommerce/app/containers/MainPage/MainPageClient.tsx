@@ -36,7 +36,7 @@ const MainPageClient = () => {
           {categories?.map((category: string) => (
             <Link
               key={category}
-              href={`/products/category=${encodeURIComponent(category)}`}
+              href={`/products?category=${encodeURIComponent(category)}`}
               className="border rounded-2xl px-2 py-1 border-gray-300 text-gray-500 font-semibold "
             >
               {category.charAt(0).toUpperCase() + category.slice(1)}
