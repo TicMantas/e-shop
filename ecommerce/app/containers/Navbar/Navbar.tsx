@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../public/logo.png";
-import { BiBasket, BiMenu, BiMoon, BiSun } from "react-icons/bi";
+import { BiBasket, BiMenu } from "react-icons/bi";
 import { useState } from "react";
 import { menuLinks } from "@/const/menuLink";
 import { useTheme } from "@/components/ThemeProvider";
