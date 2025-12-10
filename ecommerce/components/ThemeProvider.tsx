@@ -11,13 +11,7 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [mode, setMode] = useState<Mode>(() => {
-    const saved = localStorage.getItem("color-mode");
-    if (saved === "dark" || saved === "light") return saved;
-    return window.matchMedia("(perfers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  });
+  const [mode, setMode] = useState<Mode>("light");
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", mode === "dark");
