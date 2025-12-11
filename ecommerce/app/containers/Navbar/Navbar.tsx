@@ -26,9 +26,9 @@ const Navbar = () => {
       </div>
       <div>
         {open && (
-          <div className="hidden md:flex items-center justify-between p-1 text-xl font-semibold">
+          <div className="absolute bg-gray-300 w-full h-screen flex items-center flex-col">
             <p className="flex flex-1 text-3xl font-semibold my-5">Menu</p>
-            <div className="flex flex-2 text-xl font-semibold tracking-wider flex-col items-center [&_a]:my-5 ">
+            <div className="flex flex-2 text-2xl font-semibold tracking-wider flex-col items-center [&_a]:my-5 ">
               {menuLinks.map((menu) => (
                 <Link
                   key={menu.id}
