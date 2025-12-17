@@ -7,6 +7,7 @@ import { useState } from "react";
 import { menuLinks } from "@/const/menuLink";
 import { useTheme } from "@/components/ThemeProvider";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
+import { useSignUp } from "@/app/context/Signup/SignUpContext";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -16,6 +17,7 @@ const Navbar = () => {
   const navBgClass =
     mode === "dark" ? "bg-gray-900 text-white" : "bg-gray-200 text-black";
 
+  const { openSignup } = useSignUp();
   return (
     <nav className={`fixed inset-x-0 top-0 z-50 ${navBgClass} shadow-md`}>
       <div className="md:hidden flex justify-end pr-2">
@@ -69,7 +71,9 @@ const Navbar = () => {
               {menu.title}
             </Link>
           ))}
-          <button>Sign up</button>
+          <button onClick={openSignup} className="cursor-pointer">
+            Sign up
+          </button>
         </div>
         <div className="flex flex-1 justify-center">
           <button className="text-3xl cursor-pointer">
