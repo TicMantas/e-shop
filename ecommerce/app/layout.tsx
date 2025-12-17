@@ -4,6 +4,7 @@ import ReactQueryProviderClient from "./ReactQueryProviderClient";
 import "./globals.css";
 import Navbar from "./containers/Navbar/Navbar";
 import ThemeProvider from "@/components/ThemeProvider";
+import { SignUpProvider } from "./context/Signup/SignUpContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,8 +32,10 @@ export default function RootLayout({
       >
         <ReactQueryProviderClient>
           <ThemeProvider>
-            <Navbar />
-            {children}
+            <SignUpProvider>
+              <Navbar />
+              {children}
+            </SignUpProvider>
           </ThemeProvider>
         </ReactQueryProviderClient>
       </body>
