@@ -1,27 +1,31 @@
-import React from "react";
-
 type InputProps = {
   placeholder: string;
   type: string;
-  children: string;
+  title: string;
   name: string;
   required?: boolean;
-  additionalClass?: String;
+  additionalClass?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const Input = ({
   placeholder,
   type,
-  children,
+  title,
   name,
   required,
   additionalClass,
+  value,
+  onChange,
 }: InputProps) => {
   return (
     <div className="flex justify-end mt-3 gap-4 items-center w-full">
-      <p className="flex-2 tracking-widest font-semibold text-xl">{children}</p>
+      <p className="flex-2 tracking-widest font-semibold text-xl">{title}</p>
       <input
         type={type}
+        value={value}
+        onChange={onChange}
         className={`  ${
           additionalClass
             ? additionalClass
