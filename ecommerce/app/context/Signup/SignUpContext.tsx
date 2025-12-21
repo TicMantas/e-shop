@@ -1,87 +1,110 @@
 "use client";
 import { useState, createContext, useContext } from "react";
-import Modal from "@/app/modal/Modal";
-import ModalBody from "@/app/modal/ModalBody";
-import ModalHeader from "@/app/modal/ModalHeader";
-import ModalFooter from "@/app/modal/ModalFooter";
-import SignUp from "../../form/SignUp";
+import { User } from "@supabase/supabase-js";
+import { getSupabaseBrowserClient } from "@/lib/supabase/browser-clients";
+import SignUp from "@/app/form/SignUp";
 import Login from "@/app/form/Login";
+
+type EmailPasswordProps = {
+  user: User | null;
+  children: React.ReactNode;
+};
+
+export type Mode = "Register" | "Login";
+
 type ModalContextValue = {
   openSignup: () => void;
   closeSignUp: () => void;
-  isSignUpOpen: boolean;
 };
 
 const SignupContext = createContext<ModalContextValue | undefined>(undefined);
 
-export const SignUpProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const openSignup = () => setIsSignUpOpen(true);
-  const closeSignUp = () => setIsSignUpOpen(false);
+export const SignUpProvider = ({ user, children }: EmailPasswordProps) => {
+  // sign in  and   sign up  switch
+  const [mode, setMode] = useState<Mode | boolean>(false);
+  // status of the signs
+  const [status, setStatus] = useState("");
+  const removeStatus = () => {};
+  // formData to send in DB
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  //supabase
+  const supabase = getSupabaseBrowserClient();
+  // modal
+  const openSignup = () => setMode("Register");
+  const closeSignUp = () => {
+    setMode(false);
+    removeStatus();
+    setEmail("");
+    setPassword("");
+  };
+
+  //tests
+  const handleModeToggle = () => {
+    if (mode === "Register") {
+      setMode("Login");
+      setStatus("");
+    } else {
+      setMode("Register");
+      setStatus("");
+    }
+  };
+
+  // TCSS class implementation
+
+  async function handleSubmit(e?: React.FormEvent<HTMLFormElement>) {
+    e?.preventDefault();
+
+    if (mode === "Register") {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (error) {
+        setStatus(error.message);
+      } else {
+        setStatus("Check your inbox to confirm your account ! ");
+      }
+    } else {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) {
+        setStatus(error.message);
+      } else {
+        setStatus("Login successfully !");
+      }
+    }
+  }
 
   return (
-    <SignupContext.Provider value={{ openSignup, closeSignUp, isSignUpOpen }}>
+    <SignupContext.Provider value={{ openSignup, closeSignUp }}>
       {children}
-      {isSignUpOpen && (
-        <Modal>
-          <ModalHeader title="Signup" />
-          <ModalBody>
-            <div className="flex flex-col w-full">
-              <SignUp />
-              <div className="flex flex-col items-center gap-1 my-2 flex-1">
-                <p>Already have an account </p>
-                <button
-                  onClick={() => {
-                    setIsSignUpOpen(false);
-                    setIsLoginOpen(true);
-                  }}
-                  className={
-                    "text-blue-600 border-b-2 border-transparent hover:border-blue-800 hover:text-blue-800 duration-700 cursor-pointer"
-                  }
-                >
-                  Login
-                </button>
-              </div>
-            </div>
-          </ModalBody>
-          <ModalFooter
-            agree={() => {}}
-            agreeText={"Sign Up"}
-            close={closeSignUp}
-            closeText="Close"
-          />
-        </Modal>
+
+      {mode === "Register" && (
+    <SignUp
+          mode={mode}
+          status={status}
+          setMode={handleModeToggle}
+          onSubmit={handleSubmit}
+          email={email}
+          setEmail={(e) => setEmail((e as React.ChangeEvent<HTMLInputElement>).target.value)}
+          password={password}
+          setPassword={(e) => setPassword((e as React.ChangeEvent<HTMLInputElement>).target.value)}
+          closeSignUp={closeSignUp}
+        />
       )}
-      {isLoginOpen && (
-        <Modal>
-          <ModalHeader title="Login" />
-          <ModalBody>
-            <div className="flex flex-col w-full">
-              <Login />
-              <div className="flex flex-col items-center gap-1 my-2 flex-1">
-                <p>Back to </p>
-                <button
-                  onClick={() => {
-                    setIsLoginOpen(false);
-                    setIsSignUpOpen(true);
-                  }}
-                  className={
-                    "text-blue-600 border-b-2 border-transparent hover:border-blue-800 hover:text-blue-800 duration-700 cursor-pointer"
-                  }
-                >
-                  Register
-                </button>
-              </div>
-            </div>
-          </ModalBody>
-          <ModalFooter
-            agree={() => {}}
-            agreeText={"Login"}
-            close={() => setIsLoginOpen(false)}
-            closeText="Close"
-          />
-        </Modal>
+
+      {mode === "Login" && (
+        <Login status={""} setMode={function (): void {
+          throw new Error("Function not implemented.");
+        } } closeLogin={function (): void {
+          throw new Error("Function not implemented.");
+        } } onSubmit={function (): void {
+          throw new Error("Function not implemented.");
+        } }/>
       )}
     </SignupContext.Provider>
   );
