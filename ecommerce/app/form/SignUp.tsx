@@ -4,6 +4,7 @@ import Modal from "../modal/Modal";
 import ModalBody from "../modal/ModalBody";
 import ModalFooter from "../modal/ModalFooter";
 import ModalHeader from "../modal/ModalHeader";
+import { errorMessage } from "../../utils/ErrorMessage";
 
 type SignUpProps = {
   mode: string;
@@ -28,7 +29,8 @@ const SignUp = ({
   setMode,
   closeSignUp,
 }: SignUpProps) => {
-  const inputClass = "shadow-md rounded-xl text-center p-2 w-full flex-5";
+
+const inputClass = "shadow-md rounded-xl text-center p-2 w-full flex-5";
 
   return (
     <Modal>
@@ -80,7 +82,7 @@ const SignUp = ({
             </button>
           </div>
           <div>
-            <p className="text-lg text-center">{status}</p>
+            <p className="text-lg text-center p-2">{errorMessage(status)}</p>
           </div>
         </div>
       </ModalBody>
