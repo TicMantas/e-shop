@@ -1,3 +1,4 @@
+import type { ChangeEvent, FormEvent } from "react";
 import Input from "@/components/Input";
 import Modal from "../modal/Modal";
 import ModalBody from "../modal/ModalBody";
@@ -5,16 +6,21 @@ import ModalFooter from "../modal/ModalFooter";
 import ModalHeader from "../modal/ModalHeader";
 
 type LoginProps = {
+  mode: string;
   status: string;
+  email: string;
+  password: string;
   setMode: () => void;
   closeLogin: () => void;
-  onSubmit: () => void;
+  onSubmit: (e?: FormEvent<HTMLFormElement>) => void;
+  setEmail: (e: ChangeEvent<HTMLInputElement>) => void;
+  setPassword: (e: ChangeEvent<HTMLInputElement>) => void;
 };
-const Login = ({ status, setMode, closeLogin, onSubmit }: LoginProps) => {
+const Login = ({ mode, setMode, closeLogin, onSubmit, email, password, setEmail, setPassword, status }: LoginProps) => {
   const inputClass = "shadow-md rounded-xl text-center p-2 w-full flex-5";
   return (
     <Modal>
-      <ModalHeader title="Login" />
+      <ModalHeader title={mode} />
       <ModalBody>
         <div className="flex flex-col w-full">
           <form
@@ -28,6 +34,8 @@ const Login = ({ status, setMode, closeLogin, onSubmit }: LoginProps) => {
               name={"email"}
               additionalClass={inputClass}
               required
+              value={email}
+              onChange={setEmail}
             />
             <Input
               placeholder={"Enter your password"}
@@ -36,6 +44,8 @@ const Login = ({ status, setMode, closeLogin, onSubmit }: LoginProps) => {
               name={"password"}
               additionalClass={inputClass}
               required
+              value={password}
+              onChange={setPassword}
             />
             <button
               type="submit"
