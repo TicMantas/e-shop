@@ -4,6 +4,7 @@ import Modal from "../modal/Modal";
 import ModalBody from "../modal/ModalBody";
 import ModalFooter from "../modal/ModalFooter";
 import ModalHeader from "../modal/ModalHeader";
+import { errorMessage } from "../../utils/ErrorMessage";
 
 type LoginProps = {
   mode: string;
@@ -68,7 +69,7 @@ const Login = ({ mode, setMode, closeLogin, onSubmit, email, password, setEmail,
             </button>
           </div>
           <div>
-            <p className="text-lg text-center">{status}</p>
+            <p className="text-lg text-center p-2">{errorMessage(status)}</p>
           </div>
         </div>
       </ModalBody>

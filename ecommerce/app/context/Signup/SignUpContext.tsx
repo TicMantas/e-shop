@@ -24,14 +24,17 @@ export const SignUpProvider = ({ children }: EmailPasswordProps) => {
   const [mode, setMode] = useState<Mode | boolean>(false);
   // status of the signs
   const [status, setStatus] = useState("");
-  const removeStatus = () => {};
+  const removeStatus = () => {setStatus("")};
   // formData to send in DB
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   //supabase
   const supabase = getSupabaseBrowserClient();
   // modal
-  const openSignup = () => setMode("Register");
+  const openSignup = () => {
+    setMode("Register");
+    removeStatus();
+  };
   const closeSignUp = () => {
     setMode(false);
     removeStatus();
@@ -49,8 +52,6 @@ export const SignUpProvider = ({ children }: EmailPasswordProps) => {
       setStatus("");
     }
   };
-
-  // TCSS class implementation
 
   async function handleSubmit(e?: React.FormEvent<HTMLFormElement>) {
     e?.preventDefault();
