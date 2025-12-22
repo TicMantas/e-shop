@@ -19,7 +19,7 @@ type ModalContextValue = {
 
 const SignupContext = createContext<ModalContextValue | undefined>(undefined);
 
-export const SignUpProvider = ({ user, children }: EmailPasswordProps) => {
+export const SignUpProvider = ({ children }: EmailPasswordProps) => {
   // sign in  and   sign up  switch
   const [mode, setMode] = useState<Mode | boolean>(false);
   // status of the signs
@@ -60,7 +60,7 @@ export const SignUpProvider = ({ user, children }: EmailPasswordProps) => {
         email,
         password,
       });
-
+      
       if (error) {
         setStatus(error.message);
       } else {
@@ -98,13 +98,17 @@ export const SignUpProvider = ({ user, children }: EmailPasswordProps) => {
       )}
 
       {mode === "Login" && (
-        <Login status={""} setMode={function (): void {
-          throw new Error("Function not implemented.");
-        } } closeLogin={function (): void {
-          throw new Error("Function not implemented.");
-        } } onSubmit={function (): void {
-          throw new Error("Function not implemented.");
-        } }/>
+        <Login
+          status={status}
+          mode={mode}
+          setMode={handleModeToggle}
+          closeLogin={closeSignUp}
+          onSubmit={handleSubmit}
+          email={email}
+          password={password}
+          setEmail={(e) => setEmail((e as React.ChangeEvent<HTMLInputElement>).target.value)}
+          setPassword={(e) => setPassword((e as React.ChangeEvent<HTMLInputElement>).target.value)}
+        />
       )}
     </SignupContext.Provider>
   );
