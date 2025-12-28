@@ -1,14 +1,8 @@
 "use client";
 import { useState, createContext, useContext } from "react";
-import { User } from "@supabase/supabase-js";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser-clients";
 import SignUp from "@/app/form/SignUp";
 import Login from "@/app/form/Login";
-
-type EmailPasswordProps = {
-  user: User | null;
-  children: React.ReactNode;
-};
 
 export type Mode = "Register" | "Login";
 
@@ -19,7 +13,7 @@ type ModalContextValue = {
 
 const SignupContext = createContext<ModalContextValue | undefined>(undefined);
 
-export const SignUpProvider = ({ children }: EmailPasswordProps) => {
+export const SignUpProvider = ({ children }: { children : React.ReactNode}) => {
   // sign in  and   sign up  switch
   const [mode, setMode] = useState<Mode | boolean>(false);
   // status of the signs
