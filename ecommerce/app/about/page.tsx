@@ -1,4 +1,3 @@
-import React from "react";
 import logo from "../public/logo.png";
 import Link from "next/link";
 import AlexProfilePic from "../public/Alex.png";
@@ -7,7 +6,7 @@ import TaylorProfilePic from "../public/Taylor.png";
 import Image from "next/image";
 const About = () => {
   return (
-    <main className="flex justify-center items-center flex-col">
+    <main className="flex justify-center items-center flex-col min-h-screen">
       <header className="flex flex-col items-center mb-3 p-10">
         <Image src={logo} alt="Logo" className="w-40 rounded-full" />
         <p className="mt-3 text-5xl font-extrabold">About us</p>
@@ -16,10 +15,10 @@ const About = () => {
           experience. Built with care — browse our products or get in touch.
         </p>
         <div className="flex gap-3 mt-6 font-semibold [&_a]:hover:bg-black [&_a]:hover:text-white">
-          <Link className="border border-gray-400 rounded-3xl p-2" href={""}>
+          <Link className="border border-gray-400 rounded-3xl p-2" href={"/products"}>
             Browse products
           </Link>
-          <Link className="border border-gray-400 rounded-3xl p-2" href={""}>
+          <Link className="border border-gray-400 rounded-3xl p-2" href={"/contacts"}>
             Contact us
           </Link>
         </div>
