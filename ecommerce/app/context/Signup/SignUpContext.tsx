@@ -42,7 +42,6 @@ export const SignUpProvider = ({ children }: EmailPasswordProps) => {
     setPassword("");
   };
 
-  //tests
   const handleModeToggle = () => {
     if (mode === "Register") {
       setMode("Login");
@@ -53,32 +52,45 @@ export const SignUpProvider = ({ children }: EmailPasswordProps) => {
     }
   };
 
-  async function handleSubmit(e?: React.FormEvent<HTMLFormElement>) {
-    e?.preventDefault();
+async function handleSubmit(e?: React.FormEvent<HTMLFormElement>) {
+  e?.preventDefault();
 
-    if (mode === "Register") {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-      
-      if (error) {
-        setStatus(error.message);
-      } else {
-        setStatus("Check your inbox to confirm your account ! ");
-      }
+  const trimmedEmail = email.trim();
+
+  if (mode === "Register") {
+    const { data, error } = await supabase.auth.signUp({
+      email: trimmedEmail,
+      password,
+    });
+
+    if (error) {
+      setStatus(error.message);
+      return;
+    }
+
+    if (data.user && data.user.identities?.length === 0) {
+      setStatus("Email already exists. Please log in instead.");
+      return;
+    }
+
+    setStatus("Check your inbox to confirm your account ! ");
+    return;
+  }
+
+  if (mode === "Login") {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: trimmedEmail,
+      password,
+    });
+
+    if (error) {
+      setStatus(error.message);
     } else {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (error) {
-        setStatus(error.message);
-      } else {
-        setStatus("Login successfully !");
-      }
+      setStatus("Login successfully !");
     }
   }
+}
+  
 
   return (
     <SignupContext.Provider value={{ openSignup, closeSignUp }}>
