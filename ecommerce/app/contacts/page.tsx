@@ -31,20 +31,20 @@ const Contacts = () => {
         </div>
       </section>
       <form className="rounded-4xl flex flex-col flex-1 m-2 p-10 items-center justify-center shadow-xl">
-        <Input placeholder={""} type={"text"} children={"Name"} name={"name"} />
+        <Input placeholder={""} type={"text"} title={"Name"} name={"name"} />
         <Input
           placeholder={""}
           type={"text"}
-          children={"Last name"}
+          title={"Last name"}
           name={"lastName"}
         />
         <Input
           placeholder={""}
           type={"number"}
-          children={"Phone nr."}
+          title={"Phone nr."}
           name={"phone"}
         />
-        <Input placeholder={""} type={""} children={"Email"} name={"email"} />
+        <Input placeholder={""} type={""} title={"Email"} name={"email"} />
         <div className="flex justify-end mt-3 gap-4 items-center w-full">
           <p className="flex-2 tracking-widest font-semibold text-xl">
             Your message:
