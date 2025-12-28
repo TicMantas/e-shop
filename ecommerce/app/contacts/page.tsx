@@ -6,7 +6,7 @@ import { PiPhone } from "react-icons/pi";
 
 const Contacts = () => {
   return (
-    <main className="flex md:flex-row md:justify-center md:items-center flex-col m-10">
+    <main className="flex md:flex-row md:justify-center md:items-center flex-col m-10 min-h-screen">
       <section className="gap-10 flex flex-1 flex-col m-2 p-3 items-center justify-center">
         <p className="text-6xl font-extrabold tracking-widest">Contact us</p>
         <p className="text-md text-gray-400 text-center">
