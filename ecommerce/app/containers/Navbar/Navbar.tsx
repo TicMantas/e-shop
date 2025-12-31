@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../public/logo.png";
-import { BiBasket, BiMenu } from "react-icons/bi";
+import { BiBasket, BiHeart, BiMenu } from "react-icons/bi";
 import { useState } from "react";
 import { menuLinks } from "@/const/menuLink";
 import { useTheme } from "@/components/ThemeProvider";
@@ -17,7 +17,8 @@ const Navbar = () => {
   const navBgClass =
     mode === "dark" ? "bg-gray-900 text-white" : "bg-gray-200 text-black";
 
-  const { openSignup } = useSignUp();
+  const { openSignup, logout, user } = useSignUp();
+
   return (
     <nav className={`fixed inset-x-0 top-0 z-50 ${navBgClass} shadow-md`}>
       <div className="md:hidden flex justify-end pr-2">
@@ -52,43 +53,48 @@ const Navbar = () => {
         )}
       </div>
 
-      <div className="hidden md:flex items-center justify-between p-1 text-xl font-semibold">
-        <div className="flex flex-1 p-1 justify-center">
-          <Image
-            width={60}
-            className="rounded-full"
-            src={logo}
-            alt={"Logo-image"}
-          />
+      <div className="hidden md:flex gap-2 px-6 py-2 text-xl font-semibold">
+        <div className="pr-15">
+          <Image width={60} className="rounded-full" src={logo} alt="Logo" />
         </div>
-        <div className="flex flex-5 justify-between px-2 group [&_a]:cursor-pointer">
+
+        <div className="flex items-center justify-between flex-4">
           {menuLinks.map((menu) => (
-            <Link
-              key={menu.id}
-              href={menu.route}
-              onClick={() => setOpen(false)}
-            >
+            <Link key={menu.id} href={menu.route}>
               {menu.title}
             </Link>
           ))}
-          <button onClick={openSignup} className="cursor-pointer">
-            Sign up
-          </button>
         </div>
-        <div className="flex flex-1 justify-center">
-          <button className="text-3xl cursor-pointer">
-            <BiBasket />
-          </button>
+
+        <div className="flex flex-2 items-center justify-center">
+          {!user && (
+            <button onClick={openSignup} className="cursor-pointer">
+              Sign up
+            </button>
+          )}
+          {user && (
+            <button onClick={logout} className="cursor-pointer">
+              Logout
+            </button>
+          )}
         </div>
-        <div>
-          <button onClick={toggle} aria-label="Toggle theme">
-            {mode === "dark" ? (
-              <BsSunFill size={35} color="yellow" className="pr-4" />
-            ) : (
-              <BsMoonFill size={35} color="black" className="pr-4" />
-            )}
-          </button>
-        </div>
+        {user && (
+          <div className="flex flex-1 items-center gap-8">
+            <button className="text-3xl cursor-pointer">
+              <BiHeart />
+            </button>
+            <button className="text-3xl cursor-pointer">
+              <BiBasket />
+            </button>
+          </div>
+        )}
+        <button onClick={toggle} className="pr-5" aria-label="Toggle theme">
+          {mode === "dark" ? (
+            <BsSunFill size={30} color="yellow" />
+          ) : (
+            <BsMoonFill size={30} color="black" />
+          )}
+        </button>
       </div>
     </nav>
   );
